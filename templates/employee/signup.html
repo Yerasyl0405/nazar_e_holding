@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lobster+Two&family=Raleway:wght@100&family=Ubuntu:wght@300&display=swap"
+        rel="stylesheet">
+    <title>Регистрация</title>
+    <style>
+        body {
+            background-color: whitesmoke;
+            font-family: 'Ubuntu', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .login {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: stretch;
+            background-color: white;
+            max-width: 1000px;
+            margin: 50px auto;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .imgs {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            padding: 40px;
+        }
+
+        .imgs img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .login-form {
+            flex: 1;
+            padding: 40px;
+            background-color: white;
+            color: black;
+        }
+
+        .login-form h2 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        td {
+            padding: 8px;
+            vertical-align: middle;
+        }
+
+        input[type=text],
+        input[type=password],
+        input[type=email],
+        input[type=date],
+        select {
+            width: 100%;
+            padding: 6px 10px;
+            margin-top: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input[type=submit] {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: rgb(52, 152, 219);
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .err_message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .success_message {
+            color: green;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .login {
+                flex-direction: column;
+            }
+
+            .imgs, .login-form {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login">
+        <div class="imgs">
+            <img src="{% static 'assets/welcome.webp' %}" alt="Welcome">
+        </div>
+        <div class="login-form">
+            <h2>РЕГИСТРАЦИЯ</h2>
+            <form action="" method="post">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td>ID</td>
+                        <td><input type="text" name="id" required></td>
+                    </tr>
+                    <tr>
+                        <td>Имя</td>
+                        <td><input type="text" name="firstName" required></td>
+                    </tr>
+                    <tr>
+                        <td>Отчество</td>
+                        <td><input type="text" name="middleName"></td>
+                    </tr>
+                    <tr>
+                        <td>Фамилия</td>
+                        <td><input type="text" name="lastName" required></td>
+                    </tr>
+                    <tr>
+                        <td>Номер телефона</td>
+                        <td><input type="text" name="phoneNo" required></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="email" name="email" required></td>
+                    </tr>
+                    <tr>
+                        <td>Дата рождения</td>
+                        <td><input type="date" name="dOB" required></td>
+                    </tr>
+                    <tr>
+                        <td>Должность</td>
+                        <td>
+                            <select name="designation" required>
+                                <option value="Менеджер">Менеджер</option>
+                                <option value="РОП">РОП</option>
+                                <option value="ДОП">ДОП</option>
+                                <option value="Админ">Админ</option>
+                                <option value="SMM">SMM</option>
+                                <option value="Проджект менеджер">Проджект менеджер</option>
+                                <option value="Маркетолог">Маркетолог</option>
+                                <option value="Видеограф">Видеограф</option>
+                                <option value="HR">HR</option>
+                                <option value="Учитель">Учитель</option>
+                                <option value="МЗК">МЗК</option>
+                                <option value="Таргетолог">Таргетолог</option>
+                                <option value="Финансист">Финансист</option>
+                                <option value="Ассистент">Ассистент</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Зарплата</td>
+                        <td><input type="text" name="salary" required></td>
+                    </tr>
+                    <tr>
+                        <td>Дата начала работы</td>
+                        <td><input type="date" name="joinDate" required></td>
+                    </tr>
+                    <tr>
+                        <td>Пароль</td>
+                        <td><input type="password" name="password" required></td>
+                    </tr>
+                    <tr>
+                        <td>Подтвердите пароль</td>
+                        <td><input type="password" name="cnfpass" required></td>
+                    </tr>
+                </table>
+                <input type="submit" value="Зарегистрироваться">
+                <br><br>
+                {% for msg in messages %}
+                    {% if msg == "Registered Successfully" %}
+                        <div class="success_message">{{ msg }}</div>
+                    {% else %}
+                        <div class="err_message">{{ msg }}</div>
+                    {% endif %}
+                {% endfor %}
+            </form>
+        </div>
+    </div>
+</body>
+</html>
